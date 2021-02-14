@@ -9,11 +9,16 @@
       <party 
         v-for="(p, index) in parties"
         v-bind:initialdata="p"
+        v-bind:step="step"
         v-bind:initialindex="index"
         v-on:renameparty="onRenameParty"
       >
       </party>
       <div><button v-on:click="addParty">Add party</button></div>
+      <div>
+        <button v-if="step > 1" v-on:click="step--">&lt; Previous step</button>
+        <button v-if="step < 4" v-on:click="step++">Next step &gt;</button>
+      </div>
     </div>
     <script src="js/app.js"></script>
   </body>

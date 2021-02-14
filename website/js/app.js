@@ -1,5 +1,5 @@
 Vue.component('party', {
-  props: ['initialdata', 'initialindex'],
+  props: ['initialdata', 'initialindex', 'step'],
   data: function() { return {
     name: this.initialdata.name,
     index: this.initialindex,
@@ -8,14 +8,19 @@ Vue.component('party', {
   };},
   template: `
     <div>
-      <span v-if="!renaming">{{ name }}</span>
-      <span v-if="renaming">
-        <input v-model="name" v-on:keyup.enter="toggleRename"></input>
-      </span>
-      <button v-on:click="toggleRename">
-        <span v-if="!renaming">Rename</span>
-        <span v-if="renaming">Done</span>
-      </button>
+      <div>
+        <span v-if="!renaming">{{ name }}</span>
+        <span v-if="renaming">
+          <input v-model="name" v-on:keyup.enter="toggleRename"></input>
+        </span>
+        <button v-on:click="toggleRename">
+          <span v-if="!renaming">Rename</span>
+          <span v-if="renaming">Done</span>
+        </button>
+      </div>
+      <div v-if="step == 2">
+        Choose your destiny
+      </div>
     </div>
   `,
   methods: {
@@ -34,9 +39,10 @@ var app = new Vue({
   data: {
     parties: [{
       name: 'Party 1',
-      percentage: 1
+      percentage: 1,
     }],
-    n_parties: 1
+    n_parties: 1,
+    step: 1,
   },
   methods: {
     addParty: function() {
