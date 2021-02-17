@@ -2,24 +2,60 @@
 <html>
   <head>
     <title>Random vote</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.3/dist/quasar.min.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <div id="app">
-      <party 
-        v-for="(p, index) in parties"
-        v-bind:initialdata="p"
-        v-bind:step="step"
-        v-bind:initialindex="index"
-        v-on:renameparty="onRenameParty"
-      >
-      </party>
-      <div><button v-on:click="addParty">Add party</button></div>
-      <div>
-        <button v-if="step > 1" v-on:click="step--">&lt; Previous step</button>
-        <button v-if="step < 4" v-on:click="step++">Next step &gt;</button>
-      </div>
+      <q-layout view="hHh lpR fFf">
+
+        <q-header elevated class="bg-primary text-white">
+          <q-toolbar>
+            <q-btn dense flat round icon="menu" @click="left = !left" />
+    
+            <q-toolbar-title>
+              <q-avatar>
+                <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+              </q-avatar>
+              Random Vote
+            </q-toolbar-title>
+          </q-toolbar>
+        </q-header>
+    
+        <q-drawer show-if-above v-model="left" side="left" bordered>
+          <!-- drawer content -->
+        </q-drawer>
+    
+        <q-page-container>
+          <q-page class="q-pa-md">
+            <q-list>
+              <q-item v-for="(p, index) in parties">
+                <party                   
+                  :initialdata="p"
+                  :step="step"
+                  :initialindex="index"
+                  @renameparty="onRenameParty"
+                >
+                </party>
+              </q-item>
+              <q-item>
+                <q-btn color="primary" label="Add party" @click="addParty" v-ripple></q-btn>
+              </q-item>
+              <q-item>
+                <q-btn v-ripple :disable="step <= 1" @click="step--">&lt; Previous step</q-btn>
+                <q-btn v-ripple :disable="step >= 4" @click="step++">Next step &gt;</q-btn>
+              </q-item>
+            </q-list>
+
+          </q-page>
+          <router-view />
+        </q-page-container>
+    
+      </q-layout>
+    
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.3/dist/quasar.umd.min.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

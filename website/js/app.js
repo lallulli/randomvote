@@ -11,12 +11,12 @@ Vue.component('party', {
       <div>
         <span v-if="!renaming">{{ name }}</span>
         <span v-if="renaming">
-          <input v-model="name" v-on:keyup.enter="toggleRename"></input>
+          <input v-model="name" @keyup.enter="toggleRename"></input>
         </span>
-        <button v-on:click="toggleRename">
+        <q-btn @click="toggleRename">
           <span v-if="!renaming">Rename</span>
           <span v-if="renaming">Done</span>
-        </button>
+        </q-btn>
       </div>
       <div v-if="step == 2">
         Choose your destiny
@@ -43,6 +43,7 @@ var app = new Vue({
     }],
     n_parties: 1,
     step: 1,
+    left: false
   },
   methods: {
     addParty: function() {
