@@ -1,9 +1,8 @@
 Vue.component('party', {
-  props: ['initialdata', 'initialindex', 'step', 'lastparty'],
+  props: ['initialdata', 'initialindex', 'step', 'lastparty', 'percentage'],
   data: function() { return {
     name: this.initialdata.name,
     index: this.initialindex,
-    percentage: this.initialdata.percentage,
     renaming: false,
     degree: 5,
     ratings: [
@@ -128,19 +127,27 @@ var app = new Vue({
   el: '#app',
   data: {
     parties: [{
-      name: 'Party 1',
+      name: 'Partito 1',
+      degree: 5,
       percentage: 1,
-    }],
-    n_parties: 1,
+    },
+    {
+      name: 'Partito 2',
+      degree: 5,
+      percentage: 1,
+    }
+    ],
+    n_parties: 2,
     step: 1,
     left: false
   },
   methods: {
     addParty: function() {
       this.n_parties++;
-      var name = "Party " + this.n_parties;
+      var name = "Partito " + this.n_parties;
       this.parties.push({
         name: name,
+        degree: 5,
         percentage: 1,
       });
       console.log(this.parties);
@@ -152,13 +159,56 @@ var app = new Vue({
 
     onDegree: function(index, degree) {
       this.parties[index].degree = degree;
-      console.log(index);
-      console.log(degree);
+      var n = this.parties.length;
+      sum = 0;
+      for(var i = 0; i < n; i++) {
+        sum += this.parties[i].degree;
+      }
+      if(sum > 0) {
+        for(var i = 0; i < n; i++) {
+          this.parties[i].percentage = Math.round(100 * this.parties[i].degree / sum);
+        }
+      }
     },
 
     onPercentage: function(index, percentage) {
-      this.parties[index].percentage = percentage;
-      console.log(percentage);
+      var parties = this.parties;
+      parties[index].percentage = percentage;
+      var n = parties.length;
+      if(index < n - 1) {
+        var sum = 100;
+        for(var i = 0; i < n - 1; i++) {
+          sum -= parties[i].percentage;
+        }
+        parties[n - 1].percentage = sum;
+      }
+    },
+
+    onVote: function() {
+      this.$q.dialog({
+        title: 'Avviso',
+        message: 'Would you like to turn on the wifi?',
+        persistent: true
+      }).onOk(() => {
+        this.extract();
+      })
+    },
+
+    extract: function() {
+      var r = Math.random() * 100;
+      var sum = 0;
+      for(var p of this.parties) {
+        var next = sum + p.percentage;
+        if (next > r) {
+          this.$q.dialog({
+            title: 'Estrazione',
+            message: p.name,
+            persistent: true
+          })
+          break;
+        }
+        sum = next;
+      }
     }
 
   }

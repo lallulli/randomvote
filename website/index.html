@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Random vote</title>
+    <meta name=viewport content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+    <title>Vota Random</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/quasar@1.15.3/dist/quasar.min.css" rel="stylesheet" type="text/css">
   </head>
@@ -11,40 +12,130 @@
 
         <q-header elevated class="bg-primary text-white">
           <q-toolbar>
-            <q-btn dense flat round icon="menu" @click="left = !left" />
+            <!--<q-btn dense flat round icon="menu" @click="left = !left" />-->
     
             <q-toolbar-title>
+              <!--
               <q-avatar>
                 <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
               </q-avatar>
-              Random Vote
+              -->
+              Vota Random
             </q-toolbar-title>
           </q-toolbar>
         </q-header>
     
-        <q-drawer show-if-above v-model="left" side="left" bordered>
-          <!-- drawer content -->
-        </q-drawer>
+        <!--<q-drawer show-if-above v-model="left" side="left" bordered>
+          
+        </q-drawer>-->
     
         <q-page-container>
           <q-page class="q-pa-md">
-            <q-list>
-              <party v-for="(p, index) in parties"
-                :initialdata="p"
-                :step="step"
-                :initialindex="index"
-                :lastparty="index == parties.length - 1"
-                @renameparty="onRenameParty"
-                @ondegree="onDegree"
-                @onpercentage="onPercentage"
+            <q-stepper
+              v-model="step"
+              header-nav
+              ref="stepper"
+              color="primary"
+              animated
+            >
+              <q-step
+                :name="1"
+                title="Partiti"
+                icon="badge"
               >
-              </party>
+                <party v-for="(p, index) in parties"
+                  :initialdata="p"
+                  :step="step"
+                  :initialindex="index"
+                  :lastparty="index == parties.length - 1"
+                  :percentage="p.percentage"
+                  @renameparty="onRenameParty"
+                  @ondegree="onDegree"
+                  @onpercentage="onPercentage"
+                >
+                </party>
+                <p>
+                  <q-btn 
+                    color="primary"
+                    icon="add" 
+                    label="Aggiungi partito" 
+                    @click="addParty"
+                    v-ripple v-if="step == 1">
+                  </q-btn>
+                </p>
+              </q-step>
+
+              <q-step
+                :name="2"
+                title="Valutazione"
+                icon="grade"
+              >
+                <party v-for="(p, index) in parties"
+                  :initialdata="p"
+                  :step="step"
+                  :initialindex="index"
+                  :lastparty="index == parties.length - 1"
+                  :percentage="p.percentage"
+                  @renameparty="onRenameParty"
+                  @ondegree="onDegree"
+                  @onpercentage="onPercentage"
+                >
+                </party>
+              </q-step>
+
+              <q-step
+                :name="3"
+                title="Voti"
+                icon="assessment"
+              >
+                <party v-for="(p, index) in parties"
+                  :initialdata="p"
+                  :step="step"
+                  :initialindex="index"
+                  :lastparty="index == parties.length - 1"
+                  :percentage="p.percentage"
+                  @renameparty="onRenameParty"
+                  @ondegree="onDegree"
+                  @onpercentage="onPercentage"
+                >
+                </party>
+              </q-step>
+
+              <q-step
+                :name="4"
+                title="Estrai!"
+                icon="how_to_vote"
+              >
+                <party v-for="(p, index) in parties"
+                  :initialdata="p"
+                  :step="step"
+                  :initialindex="index"
+                  :lastparty="index == parties.length - 1"
+                  :percentage="p.percentage"
+                  @renameparty="onRenameParty"
+                  @ondegree="onDegree"
+                  @onpercentage="onPercentage"
+                >
+                </party>
+              </q-step>
+              
+
+            </q-stepper>
+
+            <q-list>
               <q-item>
-                <q-btn color="primary" icon="add" label="Add party" @click="addParty" v-ripple v-if="step == 1"></q-btn>
-              </q-item>
-              <q-item>
-                <q-btn v-ripple :disable="step <= 1" @click="step--">&lt; Previous step</q-btn>
-                <q-btn v-ripple :disable="step >= 4" @click="step++">Next step &gt;</q-btn>
+                <q-btn v-ripple :disable="step <= 1" @click="step--">&lt; Indietro</q-btn>
+                <q-btn v-ripple v-if="step < 4" @click="step++">Avanti &gt;</q-btn>
+                <q-btn 
+                  color="primary"
+                  icon="how_to_vote" 
+                  label="Vota!" 
+                  @click="onVote"
+                  v-ripple
+                  v-if="step == 4">
+                </q-btn>
+                </p>
+
               </q-item>
             </q-list>
           </q-page>
@@ -54,7 +145,7 @@
       </q-layout>
     
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quasar@1.15.3/dist/quasar.umd.min.js"></script>
     <script src="js/app.js"></script>
   </body>
