@@ -29,24 +29,24 @@
         <q-page-container>
           <q-page class="q-pa-md">
             <q-list>
-              <q-item v-for="(p, index) in parties">
-                <party                   
-                  :initialdata="p"
-                  :step="step"
-                  :initialindex="index"
-                  @renameparty="onRenameParty"
-                >
-                </party>
-              </q-item>
+              <party v-for="(p, index) in parties"
+                :initialdata="p"
+                :step="step"
+                :initialindex="index"
+                :lastparty="index == parties.length - 1"
+                @renameparty="onRenameParty"
+                @ondegree="onDegree"
+                @onpercentage="onPercentage"
+              >
+              </party>
               <q-item>
-                <q-btn color="primary" label="Add party" @click="addParty" v-ripple></q-btn>
+                <q-btn color="primary" icon="add" label="Add party" @click="addParty" v-ripple v-if="step == 1"></q-btn>
               </q-item>
               <q-item>
                 <q-btn v-ripple :disable="step <= 1" @click="step--">&lt; Previous step</q-btn>
                 <q-btn v-ripple :disable="step >= 4" @click="step++">Next step &gt;</q-btn>
               </q-item>
             </q-list>
-
           </q-page>
           <router-view />
         </q-page-container>
