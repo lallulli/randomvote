@@ -20,7 +20,12 @@ Vue.component('party', {
         label: "In passato il partito si è dimostrato coerente con il proprio programma",
         value: 5,
         enabled: true
-      }
+      },
+      {
+        label: "Mi piacciono le alleanze elettorali del partito",
+        value: 5,
+        enabled: true
+      },
     ]
   };},
   template: `
@@ -34,7 +39,7 @@ Vue.component('party', {
         <q-card-section v-if="step == 1">
           <q-input 
             v-model="name"
-            label="Name"
+            label="Nome"
             @change="$emit('renameparty', index, name)"
           >
           </q-input>
@@ -135,8 +140,7 @@ var app = new Vue({
       name: 'Partito 2',
       degree: 5,
       percentage: 1,
-    }
-    ],
+    }],
     n_parties: 2,
     step: 1,
     left: false
@@ -186,8 +190,8 @@ var app = new Vue({
 
     onVote: function() {
       this.$q.dialog({
-        title: 'Avviso',
-        message: 'Would you like to turn on the wifi?',
+        title: 'Prendi una decisione',
+        message: 'Decidi: questa estrazione è una prova, oppure è la tua estrazione definitiva? Nel secondo caso, attienti al risultato!',
         persistent: true
       }).onOk(() => {
         this.extract();
