@@ -202,8 +202,8 @@
 
             <q-list>
               <q-item>
-                <q-btn v-ripple :disable="step <= 1" @click="step--">&lt; Indietro</q-btn>
-                <q-btn v-ripple v-if="step < 4" @click="step++">Avanti &gt;</q-btn>
+                <q-btn v-ripple :disable="step <= 1" @click="step--; window.scrollTo(0, 0);">&lt; Indietro</q-btn>
+                <q-btn v-ripple v-if="step < 4" @click="step++; window.scrollTo(0, 0);">Avanti &gt;</q-btn>
                 <q-btn 
                   color="primary"
                   icon="how_to_vote" 
