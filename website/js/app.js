@@ -30,7 +30,7 @@ const addPartyToStore = (index) => {
         enabled: true
       },
       {
-        label: "Condivido le alleanze elettorali del partito",
+        label: "Approvo le alleanze elettorali del partito",
         value: 5,
         enabled: true
       },
@@ -45,54 +45,26 @@ addPartyToStore(1);
 
 
 Vue.component('party', {
-  props: ['initialdata', 'initialindex', 'step', 'lastparty', 'percentage'],
-  data: function() { return {
-    name: this.initialdata.name,
-    index: this.initialindex,
-    renaming: false,
-    degree: 5,
-    ratings: [
-      {
-        label: "Sono d'accordo con le idee e i principi espressi da questo partito",
-        value: 5,
-        enabled: true
-      },
-      {
-        label: "Ho fiducia e stima nei confronti dei candidati",
-        value: 5,
-        enabled: true
-      },
-      {
-        label: "In passato il partito si è dimostrato coerente con il proprio programma",
-        value: 5,
-        enabled: true
-      },
-      {
-        label: "Condivido le alleanze elettorali del partito",
-        value: 5,
-        enabled: true
-      },
-    ]
-  };},
+  props: ['partyobj', 'step', 'lastparty'],
   template: `
     <q-expansion-item
       expand-separator
       :default-opened="false"
-      :label="name? name: 'Partito ' + (index + 1)"
+      :label="partyobj.name? partyobj.name: 'Partito ' + (partyobj.index + 1)"
       group="parties"
     >
       <q-card>
         <q-card-section v-if="step == 1">
           <q-input 
-            v-model="name"
+            v-model="partyobj.name"
             label="Nome"
-            @change="$emit('renameparty', index, name)"
+            @change="$emit('renameparty', partyobj.index, partyobj.name)"
           >
           </q-input>
         </q-card-section>
 
-        <q-card-section v-if="step == 2" v-for="(rating, idx) in ratings">
-          <p><q-badge color="secondary">{{rating.label}}</q-badge></p>
+        <q-card-section v-if="step == 2" v-for="(rating, idx) in partyobj.ratings">
+          <p><q-badge color="secondary">{{ rating.label }}</q-badge></p>
           <div>
             <q-toggle v-model="rating.enabled" />
             <q-rating
@@ -107,10 +79,10 @@ Vue.component('party', {
         </q-card-section>
 
         <q-card-section v-if="step == 3">
-          <p><q-badge color="secondary">Voto 0-10</q-badge>&nbsp;{{ degree }}</p>
+          <p><q-badge color="secondary">Voto 0-10</q-badge>&nbsp;{{ partyobj.degree }}</p>
 
           <q-slider
-            v-model="degree"
+            v-model="partyobj.degree"
             :min="0"
             :step="0.1"
             :max="10"
@@ -122,10 +94,10 @@ Vue.component('party', {
 
         <q-card-section v-if="step == 4">
           
-          <p><q-badge color="secondary">Percentuale di probabilità</q-badge>&nbsp;{{ percentage }}%</p>
+          <p><q-badge color="secondary">Percentuale di probabilità</q-badge>&nbsp;{{ partyobj.percentage }}%</p>
 
           <q-slider
-            v-model="percentage"
+            v-model="partyobj.percentage"
             :min="0"
             :step="1"
             :max="100"
@@ -134,14 +106,14 @@ Vue.component('party', {
           >
           </q-slider>
 
-        </q-card-section>
+        </q-card-section>        
       </q-card>
     </q-expansion-item>
   `,
   methods: {
   },
   watch: {
-    ratings: {
+    "partyobj.ratings": {
       deep: true,
       handler: function(val) {
         // When rating is updated, compute degree as the
@@ -155,18 +127,18 @@ Vue.component('party', {
           }
         }
         if(n > 0) {
-          this.degree = Math.round(10 * n / d) / 10;
+          this.partyobj.degree = Math.round(10 * n / d) / 10;
         } else {
-          this.degree = 0;
+          this.partyobj.degree = 0;
         }
       }
     },
 
-    degree: function(value) {
+    "partyobj.degree": function(value) {
       this.$emit('ondegree', this.index, value);
     },
 
-    percentage: function(value) {
+    "partyobj.percentage": function(value) {
       this.$emit('onpercentage', this.index, value);
     }
 
@@ -203,13 +175,11 @@ var app = new Vue({
     },
 
     onDegree: function(index, degree) {
-      this.store.parties[index].degree = degree;
       this.recomputePercentage();
     },
 
     onPercentage: function(index, percentage) {
       var parties = this.store.parties;
-      parties[index].percentage = percentage;
       var n = parties.length;
       if(index < n - 1) {
         var sum = 100;

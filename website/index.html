@@ -75,16 +75,23 @@
                   inventati per i partiti.
                 </p>
                 <party v-for="(p, index) in store.parties"
-                  :initialdata="p"
+                  :partyobj="p"
                   :step="store.step"
-                  :initialindex="index"
                   :lastparty="index == store.parties.length - 1"
-                  :percentage="p.percentage"
                   @renameparty="onRenameParty"
                   @ondegree="onDegree"
                   @onpercentage="onPercentage"
                 >
                 </party>
+
+                <q-btn
+                  color="primary"
+                  icon="add"
+                  label="Aggiungi partito"
+                  @click="addParty"
+                  v-ripple v-if="store.step == 1">
+                </q-btn>
+
               </q-step>
 
               <q-step
@@ -107,16 +114,15 @@
                   disattivare.
                 </p>
                 <party v-for="(p, index) in store.parties"
-                  :initialdata="p"
+                  :partyobj="p"
                   :step="store.step"
-                  :initialindex="index"
                   :lastparty="index == store.parties.length - 1"
-                  :percentage="p.percentage"
                   @renameparty="onRenameParty"
                   @ondegree="onDegree"
                   @onpercentage="onPercentage"
                 >
                 </party>
+
               </q-step>
 
               <q-step
@@ -130,11 +136,9 @@
                 </p>
 
                 <party v-for="(p, index) in store.parties"
-                  :initialdata="p"
+                  :partyobj="p"
                   :step="store.step"
-                  :initialindex="index"
                   :lastparty="index == store.parties.length - 1"
-                  :percentage="p.percentage"
                   @renameparty="onRenameParty"
                   @ondegree="onDegree"
                   @onpercentage="onPercentage"
@@ -164,41 +168,18 @@
                   ciascuna di esse potrai svolgere una estrazione separata.
                 </p>
                 <party v-for="(p, index) in store.parties"
-                  :initialdata="p"
+                  :partyobj="p"
                   :step="store.step"
-                  :initialindex="index"
                   :lastparty="index == store.parties.length - 1"
-                  :percentage="p.percentage"
                   @renameparty="onRenameParty"
                   @ondegree="onDegree"
                   @onpercentage="onPercentage"
                 >
                 </party>
+
               </q-step>
 
             </q-stepper>
-
-<!--            <party v-for="(p, index) in store.parties"-->
-<!--              :initialdata="p"-->
-<!--              :step="store.step"-->
-<!--              :initialindex="index"-->
-<!--              :lastparty="index == store.parties.length - 1"-->
-<!--              :percentage="p.percentage"-->
-<!--              @renameparty="onRenameParty"-->
-<!--              @ondegree="onDegree"-->
-<!--              @onpercentage="onPercentage"-->
-<!--            >-->
-<!--            </party>-->
-
-            <p v-if="store.step == 1">
-              <q-btn
-                color="primary"
-                icon="add"
-                label="Aggiungi partito"
-                @click="addParty"
-                v-ripple v-if="store.step == 1">
-              </q-btn>
-            </p>
 
             <q-list>
               <q-item>
