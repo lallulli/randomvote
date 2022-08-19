@@ -45,17 +45,17 @@
               >
                 <h4>Benvenuto a Vota Random!</h4>
                 <p>
-                  Questo sito ti aiuterà a votare, nel caso in cui <strong>nessun partito politico
-                  ti soddisfi pienamente</strong>. Potrai escludere i partiti che ritieni del tutto
+                  Questo sito ti aiuta a votare, nel caso in cui <strong>nessun partito politico
+                  ti soddisfi pienamente</strong>. Puoi escludere i partiti che ritieni del tutto
                   inaccettabili, e assegnare un voto (anche basso!) ai rimanenti partiti.
                 </p>
                 <p>
-                  Vota Random sceglierà un partito a caso tra quelli a cui dato un voto.
-                  La probabilità di estrazione sarà proporzionale al voto che avrai indicato.
+                  Vota Random sceglierà un partito a caso tra quelli a cui hai dato un voto.
+                  La probabilità di estrazione sarà proporzionale al voto che hai indicato.
                   In questo modo potrai <strong>premiare</strong> i comportamenti virtuosi
                   dei partiti, e <strong>penalizzare</strong> le scelte scellerate: la probabilità
                   di votare ogni partito sarà tanto maggiore quanto più il partito si sarà
-                  comportato bene, secondo la tua opionione.
+                  comportato bene, secondo la tua opinione.
                 </p>
                 <p>
                   Vota Random è nato per <strong>combattere l'astensionismo</strong>.
@@ -68,31 +68,22 @@
                 </p>
                 <h5>Iniziamo!</h5>
                 <p>
-                  Per prima cosa <strong>inserisci il nome dei partiti</strong> tra i quali scegliere quale
+                  Per prima cosa <strong>inserisci il nome dei partiti</strong> tra i quali sceglieremo quale
                   votare. I dati rimarranno locali sul tuo dispositivo: non saranno
-                  trasmessi né analizzati da Vota Random. Se preferisci, puoi usare nomi
+                  trasmessi a server nostri o di terzi. Se preferisci, puoi usare nomi
                   inventati per i partiti.
                 </p>
-                <party v-for="(p, index) in parties"
-                  :initialdata="p"
-                  :step="step"
-                  :initialindex="index"
-                  :lastparty="index == parties.length - 1"
-                  :percentage="p.percentage"
-                  @renameparty="onRenameParty"
-                  @ondegree="onDegree"
-                  @onpercentage="onPercentage"
-                >
-                </party>
-                <p>
-                  <q-btn 
-                    color="primary"
-                    icon="add" 
-                    label="Aggiungi partito" 
-                    @click="addParty"
-                    v-ripple v-if="step == 1">
-                  </q-btn>
-                </p>
+<!--                <party v-for="(p, index) in parties"-->
+<!--                  :initialdata="p"-->
+<!--                  :step="step"-->
+<!--                  :initialindex="index"-->
+<!--                  :lastparty="index == parties.length - 1"-->
+<!--                  :percentage="p.percentage"-->
+<!--                  @renameparty="onRenameParty"-->
+<!--                  @ondegree="onDegree"-->
+<!--                  @onpercentage="onPercentage"-->
+<!--                >-->
+<!--                </party>-->
               </q-step>
 
               <q-step
@@ -114,17 +105,17 @@
                   di valutazione non è importante per te oppure non si applica, lo puoi
                   disattivare.
                 </p>
-                <party v-for="(p, index) in parties"
-                  :initialdata="p"
-                  :step="step"
-                  :initialindex="index"
-                  :lastparty="index == parties.length - 1"
-                  :percentage="p.percentage"
-                  @renameparty="onRenameParty"
-                  @ondegree="onDegree"
-                  @onpercentage="onPercentage"
-                >
-                </party>
+<!--                <party v-for="(p, index) in parties"-->
+<!--                  :initialdata="p"-->
+<!--                  :step="step"-->
+<!--                  :initialindex="index"-->
+<!--                  :lastparty="index == parties.length - 1"-->
+<!--                  :percentage="p.percentage"-->
+<!--                  @renameparty="onRenameParty"-->
+<!--                  @ondegree="onDegree"-->
+<!--                  @onpercentage="onPercentage"-->
+<!--                >-->
+<!--                </party>-->
               </q-step>
 
               <q-step
@@ -134,21 +125,20 @@
               >
                 <h4>Ed ecco i voti!</h4>
                 <p>
-                  Ora puoi verificare il voto calcolato per ogni partito. Hai la possibilità di modificare i voti come ritieni
-                  più opportuno.
+                  Vota Random ha calcolato un voto per ogni partito. Adesso hai la possibilità di verificare e modificare i voti come ritieni più opportuno.
                 </p>
 
-                <party v-for="(p, index) in parties"
-                  :initialdata="p"
-                  :step="step"
-                  :initialindex="index"
-                  :lastparty="index == parties.length - 1"
-                  :percentage="p.percentage"
-                  @renameparty="onRenameParty"
-                  @ondegree="onDegree"
-                  @onpercentage="onPercentage"
-                >
-                </party>
+<!--                <party v-for="(p, index) in parties"-->
+<!--                  :initialdata="p"-->
+<!--                  :step="step"-->
+<!--                  :initialindex="index"-->
+<!--                  :lastparty="index == parties.length - 1"-->
+<!--                  :percentage="p.percentage"-->
+<!--                  @renameparty="onRenameParty"-->
+<!--                  @ondegree="onDegree"-->
+<!--                  @onpercentage="onPercentage"-->
+<!--                >-->
+<!--                </party>-->
               </q-step>
 
               <q-step
@@ -172,21 +162,42 @@
                   Se l'elezione prevede più schede (ad esempio, Camera e Senato), per
                   ciascuna di esse potrai svolgere una estrazione separata.
                 </p>
-                <party v-for="(p, index) in parties"
-                  :initialdata="p"
-                  :step="step"
-                  :initialindex="index"
-                  :lastparty="index == parties.length - 1"
-                  :percentage="p.percentage"
-                  @renameparty="onRenameParty"
-                  @ondegree="onDegree"
-                  @onpercentage="onPercentage"
-                >
-                </party>
+<!--                <party v-for="(p, index) in parties"-->
+<!--                  :initialdata="p"-->
+<!--                  :step="step"-->
+<!--                  :initialindex="index"-->
+<!--                  :lastparty="index == parties.length - 1"-->
+<!--                  :percentage="p.percentage"-->
+<!--                  @renameparty="onRenameParty"-->
+<!--                  @ondegree="onDegree"-->
+<!--                  @onpercentage="onPercentage"-->
+<!--                >-->
+<!--                </party>-->
               </q-step>
-              
 
             </q-stepper>
+
+            <party v-for="(p, index) in parties"
+              :initialdata="p"
+              :step="step"
+              :initialindex="index"
+              :lastparty="index == parties.length - 1"
+              :percentage="p.percentage"
+              @renameparty="onRenameParty"
+              @ondegree="onDegree"
+              @onpercentage="onPercentage"
+            >
+            </party>
+
+            <p v-if="step == 1">
+              <q-btn
+                color="primary"
+                icon="add"
+                label="Aggiungi partito"
+                @click="addParty"
+                v-ripple v-if="step == 1">
+              </q-btn>
+            </p>
 
             <q-list>
               <q-item>

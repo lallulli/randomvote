@@ -22,7 +22,7 @@ Vue.component('party', {
         enabled: true
       },
       {
-        label: "Mi piacciono le alleanze elettorali del partito",
+        label: "Condivido le alleanze elettorali del partito",
         value: 5,
         enabled: true
       },
@@ -31,8 +31,8 @@ Vue.component('party', {
   template: `
     <q-expansion-item
       expand-separator
-      :default-opened="index == 0"
-      :label="name"
+      :default-opened="false"
+      :label="name? name: 'Partito ' + (index + 1)"
       group="parties"
     >
       <q-card>
@@ -56,7 +56,7 @@ Vue.component('party', {
               :disable="!rating.enabled"
             >
             </q-rating>
-            <span v-if="rating.enabled">{{rating.value}} / 10</span>
+            <span v-if="rating.enabled">{{ rating.value }} / 10</span>
           </div>
         </q-card-section>
 
@@ -132,14 +132,14 @@ var app = new Vue({
   el: '#app',
   data: {
     parties: [{
-      name: 'Partito 1',
+      name: '',
       degree: 5,
-      percentage: 1,
+      percentage: 50,
     },
     {
-      name: 'Partito 2',
+      name: '',
       degree: 5,
-      percentage: 1,
+      percentage: 50,
     }],
     n_parties: 2,
     step: 1,
@@ -148,21 +148,20 @@ var app = new Vue({
   methods: {
     addParty: function() {
       this.n_parties++;
-      var name = "Partito " + this.n_parties;
+      var name = "";
       this.parties.push({
         name: name,
         degree: 5,
         percentage: 1,
       });
-      console.log(this.parties);
+      this.recomputePercentage();
     },
 
     onRenameParty: function(index, name) {
       this.parties[index].name = name;
     },
 
-    onDegree: function(index, degree) {
-      this.parties[index].degree = degree;
+    recomputePercentage: function() {
       var n = this.parties.length;
       sum = 0;
       for(var i = 0; i < n; i++) {
@@ -173,6 +172,11 @@ var app = new Vue({
           this.parties[i].percentage = Math.round(100 * this.parties[i].degree / sum);
         }
       }
+    },
+
+    onDegree: function(index, degree) {
+      this.parties[index].degree = degree;
+      this.recomputePercentage();
     },
 
     onPercentage: function(index, percentage) {
@@ -191,7 +195,7 @@ var app = new Vue({
     onVote: function() {
       this.$q.dialog({
         title: 'Prendi una decisione',
-        message: 'Decidi: questa estrazione è una prova, oppure è la tua estrazione definitiva? Nel secondo caso, attienti al risultato!',
+        message: 'Prima di continuare prendi una decisione: questa estrazione è una prova, oppure è la tua estrazione definitiva? Nel secondo caso, attienti al risultato!',
         persistent: true
       }).onOk(() => {
         this.extract();
@@ -201,12 +205,14 @@ var app = new Vue({
     extract: function() {
       var r = Math.random() * 100;
       var sum = 0;
+      var i = 0;
       for(var p of this.parties) {
+        i += 1;
         var next = sum + p.percentage;
         if (next > r) {
           this.$q.dialog({
             title: 'Estrazione',
-            message: p.name,
+            message: p.name? p.name: 'Partito ' + i,
             persistent: true
           })
           break;
