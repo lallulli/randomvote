@@ -1,3 +1,49 @@
+const store = Vue.reactive({
+  parties: [],
+  n_parties: 0,
+  step: 1,
+  left: false,
+});
+
+
+const addPartyToStore = (index) => {
+  const p = {
+    name: '',
+    index: store.n_parties,
+    renaming: false,
+    degree: 5,
+    percentage: 50,
+    ratings: [
+      {
+        label: "Sono d'accordo con le idee e i principi espressi da questo partito",
+        value: 5,
+        enabled: true
+      },
+      {
+        label: "Ho fiducia e stima nei confronti dei candidati",
+        value: 5,
+        enabled: true
+      },
+      {
+        label: "In passato il partito si è dimostrato coerente con il proprio programma",
+        value: 5,
+        enabled: true
+      },
+      {
+        label: "Condivido le alleanze elettorali del partito",
+        value: 5,
+        enabled: true
+      },
+    ]
+  };
+  store.parties.push(p);
+  store.n_parties++;
+}
+
+addPartyToStore(0);
+addPartyToStore(1);
+
+
 Vue.component('party', {
   props: ['initialdata', 'initialindex', 'step', 'lastparty', 'percentage'],
   data: function() { return {
@@ -130,57 +176,39 @@ Vue.component('party', {
 
 var app = new Vue({
   el: '#app',
-  data: {
-    parties: [{
-      name: '',
-      degree: 5,
-      percentage: 50,
-    },
-    {
-      name: '',
-      degree: 5,
-      percentage: 50,
-    }],
-    n_parties: 2,
-    step: 1,
-    left: false
-  },
+  data: function() { return {
+      store
+    }},
   methods: {
     addParty: function() {
-      this.n_parties++;
-      var name = "";
-      this.parties.push({
-        name: name,
-        degree: 5,
-        percentage: 1,
-      });
+      addPartyToStore();
       this.recomputePercentage();
     },
 
     onRenameParty: function(index, name) {
-      this.parties[index].name = name;
+      this.store.parties[index].name = name;
     },
 
     recomputePercentage: function() {
-      var n = this.parties.length;
+      var n = this.store.parties.length;
       sum = 0;
       for(var i = 0; i < n; i++) {
-        sum += this.parties[i].degree;
+        sum += this.store.parties[i].degree;
       }
       if(sum > 0) {
         for(var i = 0; i < n; i++) {
-          this.parties[i].percentage = Math.round(100 * this.parties[i].degree / sum);
+          this.store.parties[i].percentage = Math.round(100 * this.store.parties[i].degree / sum);
         }
       }
     },
 
     onDegree: function(index, degree) {
-      this.parties[index].degree = degree;
+      this.store.parties[index].degree = degree;
       this.recomputePercentage();
     },
 
     onPercentage: function(index, percentage) {
-      var parties = this.parties;
+      var parties = this.store.parties;
       parties[index].percentage = percentage;
       var n = parties.length;
       if(index < n - 1) {
@@ -206,7 +234,7 @@ var app = new Vue({
       var r = Math.random() * 100;
       var sum = 0;
       var i = 0;
-      for(var p of this.parties) {
+      for(var p of this.store.parties) {
         i += 1;
         var next = sum + p.percentage;
         if (next > r) {

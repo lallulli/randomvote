@@ -32,7 +32,7 @@
         <q-page-container>
           <q-page class="q-pa-md">
             <q-stepper
-              v-model="step"
+              v-model="store.step"
               header-nav
               ref="stepper"
               color="primary"
@@ -74,17 +74,17 @@
                   trasmessi a server nostri o di terzi. Se preferisci, puoi usare nomi
                   inventati per i partiti.
                 </p>
-<!--                <party v-for="(p, index) in parties"-->
-<!--                  :initialdata="p"-->
-<!--                  :step="step"-->
-<!--                  :initialindex="index"-->
-<!--                  :lastparty="index == parties.length - 1"-->
-<!--                  :percentage="p.percentage"-->
-<!--                  @renameparty="onRenameParty"-->
-<!--                  @ondegree="onDegree"-->
-<!--                  @onpercentage="onPercentage"-->
-<!--                >-->
-<!--                </party>-->
+                <party v-for="(p, index) in store.parties"
+                  :initialdata="p"
+                  :step="store.step"
+                  :initialindex="index"
+                  :lastparty="index == store.parties.length - 1"
+                  :percentage="p.percentage"
+                  @renameparty="onRenameParty"
+                  @ondegree="onDegree"
+                  @onpercentage="onPercentage"
+                >
+                </party>
               </q-step>
 
               <q-step
@@ -106,17 +106,17 @@
                   di valutazione non è importante per te oppure non si applica, lo puoi
                   disattivare.
                 </p>
-<!--                <party v-for="(p, index) in parties"-->
-<!--                  :initialdata="p"-->
-<!--                  :step="step"-->
-<!--                  :initialindex="index"-->
-<!--                  :lastparty="index == parties.length - 1"-->
-<!--                  :percentage="p.percentage"-->
-<!--                  @renameparty="onRenameParty"-->
-<!--                  @ondegree="onDegree"-->
-<!--                  @onpercentage="onPercentage"-->
-<!--                >-->
-<!--                </party>-->
+                <party v-for="(p, index) in store.parties"
+                  :initialdata="p"
+                  :step="store.step"
+                  :initialindex="index"
+                  :lastparty="index == store.parties.length - 1"
+                  :percentage="p.percentage"
+                  @renameparty="onRenameParty"
+                  @ondegree="onDegree"
+                  @onpercentage="onPercentage"
+                >
+                </party>
               </q-step>
 
               <q-step
@@ -129,17 +129,17 @@
                   Vota Random ha calcolato un voto per ogni partito. Adesso hai la possibilità di verificare e modificare i voti come ritieni più opportuno.
                 </p>
 
-<!--                <party v-for="(p, index) in parties"-->
-<!--                  :initialdata="p"-->
-<!--                  :step="step"-->
-<!--                  :initialindex="index"-->
-<!--                  :lastparty="index == parties.length - 1"-->
-<!--                  :percentage="p.percentage"-->
-<!--                  @renameparty="onRenameParty"-->
-<!--                  @ondegree="onDegree"-->
-<!--                  @onpercentage="onPercentage"-->
-<!--                >-->
-<!--                </party>-->
+                <party v-for="(p, index) in store.parties"
+                  :initialdata="p"
+                  :step="store.step"
+                  :initialindex="index"
+                  :lastparty="index == store.parties.length - 1"
+                  :percentage="p.percentage"
+                  @renameparty="onRenameParty"
+                  @ondegree="onDegree"
+                  @onpercentage="onPercentage"
+                >
+                </party>
               </q-step>
 
               <q-step
@@ -163,54 +163,54 @@
                   Se l'elezione prevede più schede (ad esempio, Camera e Senato), per
                   ciascuna di esse potrai svolgere una estrazione separata.
                 </p>
-<!--                <party v-for="(p, index) in parties"-->
-<!--                  :initialdata="p"-->
-<!--                  :step="step"-->
-<!--                  :initialindex="index"-->
-<!--                  :lastparty="index == parties.length - 1"-->
-<!--                  :percentage="p.percentage"-->
-<!--                  @renameparty="onRenameParty"-->
-<!--                  @ondegree="onDegree"-->
-<!--                  @onpercentage="onPercentage"-->
-<!--                >-->
-<!--                </party>-->
+                <party v-for="(p, index) in store.parties"
+                  :initialdata="p"
+                  :step="store.step"
+                  :initialindex="index"
+                  :lastparty="index == store.parties.length - 1"
+                  :percentage="p.percentage"
+                  @renameparty="onRenameParty"
+                  @ondegree="onDegree"
+                  @onpercentage="onPercentage"
+                >
+                </party>
               </q-step>
 
             </q-stepper>
 
-            <party v-for="(p, index) in parties"
-              :initialdata="p"
-              :step="step"
-              :initialindex="index"
-              :lastparty="index == parties.length - 1"
-              :percentage="p.percentage"
-              @renameparty="onRenameParty"
-              @ondegree="onDegree"
-              @onpercentage="onPercentage"
-            >
-            </party>
+<!--            <party v-for="(p, index) in store.parties"-->
+<!--              :initialdata="p"-->
+<!--              :step="store.step"-->
+<!--              :initialindex="index"-->
+<!--              :lastparty="index == store.parties.length - 1"-->
+<!--              :percentage="p.percentage"-->
+<!--              @renameparty="onRenameParty"-->
+<!--              @ondegree="onDegree"-->
+<!--              @onpercentage="onPercentage"-->
+<!--            >-->
+<!--            </party>-->
 
-            <p v-if="step == 1">
+            <p v-if="store.step == 1">
               <q-btn
                 color="primary"
                 icon="add"
                 label="Aggiungi partito"
                 @click="addParty"
-                v-ripple v-if="step == 1">
+                v-ripple v-if="store.step == 1">
               </q-btn>
             </p>
 
             <q-list>
               <q-item>
-                <q-btn v-ripple :disable="step <= 1" @click="step--; window.scrollTo(0, 0);">&lt; Indietro</q-btn>
-                <q-btn v-ripple v-if="step < 4" @click="step++; window.scrollTo(0, 0);">Avanti &gt;</q-btn>
+                <q-btn v-ripple :disable="store.step <= 1" @click="store.step--; window.scrollTo(0, 0);">&lt; Indietro</q-btn>
+                <q-btn v-ripple v-if="store.step < 4" @click="store.step++; window.scrollTo(0, 0);">Avanti &gt;</q-btn>
                 <q-btn 
                   color="primary"
                   icon="how_to_vote" 
                   label="Estrai!"
                   @click="onVote"
                   v-ripple
-                  v-if="step == 4">
+                  v-if="store.step == 4">
                 </q-btn>
                 </p>
 
