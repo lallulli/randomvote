@@ -36,6 +36,7 @@
               header-nav
               ref="stepper"
               color="primary"
+              vertical
               animated
             >
               <q-step
@@ -85,6 +86,7 @@
                 </party>
 
                 <q-btn
+                  flat
                   color="primary"
                   icon="add"
                   label="Aggiungi partito"
@@ -92,18 +94,23 @@
                   v-ripple v-if="store.step == 1">
                 </q-btn>
 
+                <q-stepper-navigation>
+                  <q-btn @click="store.step++" color="primary" label="Continua"></q-btn>
+                </q-stepper-navigation>
+
               </q-step>
 
               <q-step
                 :name="2"
                 title="Valutazione"
+                caption="(Facoltativo)"
                 icon="grade"
               >
                 <h4>Valutiamo i partiti</h4>
                 <p>
                   Questo passo, <strong>facoltativo</strong>, ti aiuta ad assegnare un
                   voto a ciascun partito. Se hai già le idee chiare puoi saltare questo
-                  passaggio, ed assegnare direttamente un voto ai partiti.
+                  passo, e assegnare direttamente un voto ai partiti.
                 </p>
                 <p>
                   Vota Random ti proporrà alcuni criteri di valutazione: inserisci il
@@ -122,6 +129,11 @@
                   @onpercentage="onPercentage"
                 >
                 </party>
+
+                <q-stepper-navigation>
+                  <q-btn @click="store.step++" color="primary" label="Continua"></q-btn>
+                  <q-btn flat @click="store.step--" color="primary" label="Indietro" class="q-ml-sm"></q-btn>
+                </q-stepper-navigation>
 
               </q-step>
 
@@ -144,6 +156,12 @@
                   @onpercentage="onPercentage"
                 >
                 </party>
+
+                <q-stepper-navigation>
+                  <q-btn @click="store.step++" color="primary" label="Continua"></q-btn>
+                  <q-btn flat @click="store.step--" color="primary" label="Indietro" class="q-ml-sm"></q-btn>
+                </q-stepper-navigation>
+
               </q-step>
 
               <q-step
@@ -177,28 +195,24 @@
                 >
                 </party>
 
+                <q-stepper-navigation>
+                  <q-btn
+                    color="primary"
+                    icon="how_to_vote"
+                    label="Estrai!"
+                    @click="onVote"
+                    v-ripple
+                    v-if="store.step == 4">
+                  </q-btn>
+                  <q-btn flat @click="store.step--" color="primary" label="Indietro" class="q-ml-sm"></q-btn>
+                </q-stepper-navigation>
+
+
               </q-step>
 
             </q-stepper>
 
-            <q-list>
-              <q-item>
-                <q-btn v-ripple :disable="store.step <= 1" @click="store.step--; window.scrollTo(0, 0);">&lt; Indietro</q-btn>
-                <q-btn v-ripple v-if="store.step < 4" @click="store.step++; window.scrollTo(0, 0);">Avanti &gt;</q-btn>
-                <q-btn 
-                  color="primary"
-                  icon="how_to_vote" 
-                  label="Estrai!"
-                  @click="onVote"
-                  v-ripple
-                  v-if="store.step == 4">
-                </q-btn>
-                </p>
-
-              </q-item>
-            </q-list>
-
-            <div class="row justify-center">
+            <div class="row justify-center q-mt-lg">
               &copy; 2022&nbsp;<a href="https://www.skeed.it">Luca Allulli</a>.
               Codice sorgente su&nbsp;<a href="https://github.com/lallulli/randomvote">GitHub</a>.
             </div>
