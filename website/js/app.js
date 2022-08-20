@@ -1,7 +1,7 @@
 const store = Vue.reactive({
   parties: [],
   n_parties: 0,
-  step: 1,
+  step: 0,
   left: false,
 });
 
@@ -11,27 +11,27 @@ const addPartyToStore = (index) => {
     name: '',
     index: store.n_parties,
     renaming: false,
-    degree: 5,
+    degree: 6,
     percentage: 50,
     ratings: [
       {
-        label: "Sono d'accordo con le idee e i principi espressi da questo partito",
-        value: 5,
+        label: "Valori e principi del partito",
+        value: 3,
         enabled: true
       },
       {
-        label: "Ho fiducia e stima nei confronti dei candidati",
-        value: 5,
+        label: "Onestà e credibilità dei candidati",
+        value: 3,
         enabled: true
       },
       {
-        label: "In passato il partito si è dimostrato coerente con il proprio programma",
-        value: 5,
+        label: "Coerenza dimostrata nel passato",
+        value: 3,
         enabled: true
       },
       {
-        label: "Approvo le alleanze elettorali del partito",
-        value: 5,
+        label: "Alleanze elettorali",
+        value: 3,
         enabled: true
       },
     ]
@@ -64,23 +64,28 @@ Vue.component('party', {
         </q-card-section>
 
         <q-card-section v-if="step == 2" v-for="(rating, idx) in partyobj.ratings">
-          <p><q-badge color="secondary">{{ rating.label }}</q-badge></p>
+          <p>
+            <q-badge color="secondary">{{ rating.label }}</q-badge>
+          </p>
           <div>
-            <q-toggle v-model="rating.enabled" />
+            <q-toggle v-model="rating.enabled" />          
             <q-rating
               v-model="rating.value"
               size="2em"
-              :max="10"
+              color="warning"
+              icon="star_border"
+              icon-selected="star"      
+              step="0.5"        
+              :max="5"
               :disable="!rating.enabled"
             >
             </q-rating>
-            <span v-if="rating.enabled">{{ rating.value }} / 10</span>
+<!--            <span v-if="rating.enabled">{{ rating.value }} / 5</span>-->
           </div>
         </q-card-section>
 
         <q-card-section v-if="step == 3">
           <p><q-badge color="secondary">Voto 0-10</q-badge>&nbsp;{{ partyobj.degree }}</p>
-
           <q-slider
             v-model="partyobj.degree"
             :min="0"
@@ -89,11 +94,9 @@ Vue.component('party', {
             label
           >
           </q-slider>
-
         </q-card-section>
 
         <q-card-section v-if="step == 4">
-          
           <p><q-badge color="secondary">Percentuale di probabilità</q-badge>&nbsp;{{ partyobj.percentage }}%</p>
 
           <q-slider
@@ -110,8 +113,6 @@ Vue.component('party', {
       </q-card>
     </q-expansion-item>
   `,
-  methods: {
-  },
   watch: {
     "partyobj.ratings": {
       deep: true,
@@ -127,7 +128,7 @@ Vue.component('party', {
           }
         }
         if(n > 0) {
-          this.partyobj.degree = Math.round(10 * n / d) / 10;
+          this.partyobj.degree = Math.round(10 * n / d) / 5;
         } else {
           this.partyobj.degree = 0;
         }

@@ -41,11 +41,10 @@
               animated
             >
               <q-step
-                :name="1"
-                title="Partiti"
-                icon="badge"
+                :name="0"
+                title="Benvenuto a Vota Random!"
+                icon="info"
               >
-                <h4>Benvenuto a Vota Random!</h4>
                 <p>
                   Questo sito ti aiuta a votare, nel caso in cui <strong>nessun partito politico
                   ti soddisfi pienamente</strong>. Puoi escludere i partiti che ritieni del tutto
@@ -69,12 +68,21 @@
                   Grazie a Vota Random potrai recarti con serenità nella cabina elettorale,
                   senza doverti turare il naso.
                 </p>
-                <h5>Iniziamo!</h5>
+                <q-stepper-navigation>
+                  <q-btn @click="store.step++" color="primary" label="Inizia"></q-btn>
+                </q-stepper-navigation>
+
+              </q-step>
+              <q-step
+                :name="1"
+                title="Partiti"
+                icon="badge"
+              >
                 <p>
-                  Per prima cosa <strong>inserisci il nome dei partiti</strong> tra i quali sceglieremo quale
-                  votare. I dati rimarranno locali sul tuo dispositivo: non saranno
+                  <strong>Inserisci il nome dei partiti</strong> tra i quali estrarremo quale
+                  votare. I dati rimarranno sul tuo dispositivo: non saranno
                   trasmessi a server nostri o di terzi. Se preferisci, puoi usare nomi
-                  inventati per i partiti.
+                  fittizi per i partiti.
                 </p>
                 <party v-for="(p, index) in store.parties"
                   :partyobj="p"
@@ -97,6 +105,7 @@
 
                 <q-stepper-navigation>
                   <q-btn @click="store.step++" color="primary" label="Continua"></q-btn>
+                  <q-btn flat @click="store.step--" color="primary" label="Indietro" class="q-ml-sm"></q-btn>
                 </q-stepper-navigation>
 
               </q-step>
@@ -107,19 +116,14 @@
                 caption="(Facoltativo)"
                 icon="grade"
               >
-                <h4>Valutiamo i partiti</h4>
                 <p>
-                  Questo passo, <strong>facoltativo</strong>, ti aiuta ad assegnare un
-                  voto a ciascun partito. Se hai già le idee chiare puoi saltare questo
-                  passo, e assegnare direttamente un voto ai partiti.
+                  Questo passo ti aiuta a valutare i partiti, e calcolare un voto complessivo
+                  per ciascun partito. Lo puoi saltare: se hai le idee chiare, puoi
+                  <a href="#" @click="store.step++">assegnare subito un voto ai partiti</a>.
                 </p>
                 <p>
-                  Vota Random ti proporrà alcuni criteri di valutazione: inserisci il
-                  numero di stelle per ciascun criterio. Vota Random calcolerà un voto
-                  complessivo per ciascun partito, che potrai modificare successivamente.
-                  Se un criterio
-                  di valutazione non è importante per te oppure non si applica, lo puoi
-                  disattivare.
+                  Puoi disattivare i criteri di valutazione che non si applicano o ritieni poco
+                  importanti.
                 </p>
                 <party v-for="(p, index) in store.parties"
                   :partyobj="p"
@@ -143,11 +147,9 @@
                 title="Voti"
                 icon="assessment"
               >
-                <h4>Ed ecco i voti!</h4>
                 <p>
-                  Vota Random ha calcolato un voto per ogni partito. Adesso hai la possibilità di verificare e modificare i voti come ritieni più opportuno.
+                  Vota Random ha assegnato un voto ad ogni partito. Hai la possibilità di modificare i voti come ritieni più opportuno.
                 </p>
-
                 <party v-for="(p, index) in store.parties"
                   :partyobj="p"
                   :step="store.step"
@@ -170,7 +172,6 @@
                 title="Estrai!"
                 icon="how_to_vote"
               >
-                <h4>Estrazione: chi voterai?</h4>
                 <p>
                   Vota Random ha calcolato la percentuale di probabilità di votare
                   ciascun partito, proporzionale ai voti che hai indicato. La puoi
