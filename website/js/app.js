@@ -211,8 +211,8 @@ var app = new Vue({
         if (next > r) {
           this.$q.dialog({
             title: 'Estrazione',
-            message: p.name? p.name: 'Partito ' + i,
-            persistent: true
+            message: "Il partito estratto è: " + (p.name? p.name: 'Partito ' + i),
+            persistent: true,
           })
           break;
         }
