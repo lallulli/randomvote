@@ -48,15 +48,14 @@
                 <p>
                   Questo sito ti aiuta a votare, nel caso in cui <strong>nessun partito politico
                   ti soddisfi pienamente</strong>. Puoi escludere i partiti che ritieni del tutto
-                  inaccettabili, e assegnare un voto (anche basso!) ai rimanenti partiti.
+                  inaccettabili, e assegnare una valutazione (anche bassa!) ai rimanenti partiti.
                 </p>
                 <p>
-                  Vota Random sceglierà un partito a caso tra quelli a cui hai dato un voto.
-                  La probabilità di estrazione sarà proporzionale al voto che hai indicato.
+                  Vota Random estrarrà un partito a caso tra quelli che hai valutato.
+                  La probabilità di estrazione sarà proporzionale alla tua valutazione.
                   In questo modo potrai <strong>premiare</strong> i comportamenti virtuosi
-                  dei partiti, e <strong>penalizzare</strong> le scelte scellerate: la probabilità
-                  di votare ogni partito sarà tanto maggiore quanto più il partito si sarà
-                  comportato bene, secondo la tua opinione.
+                  dei partiti, e <strong>penalizzare</strong> le scelte scellerate,
+                  <strong>inchiodando ogni partito alle proprie responsabilità</strong>.
                 </p>
                 <p>
                   Vota Random è nato per <strong>combattere l'astensionismo</strong>.
@@ -64,9 +63,8 @@
                   la risposta giusta alle scarsa coerenza dei politici, in quanto
                   indirettamente favorisce
                   i partiti a cui non daresti mai il tuo voto, e il voto di scambio.
-                  Ricordiamoci inoltre che il voto è un diritto, ma anche un dovere!
-                  Grazie a Vota Random potrai recarti con serenità nella cabina elettorale,
-                  senza doverti turare il naso.
+                  Il voto è un diritto, ma anche un dovere!
+                  Grazie a Vota Random potrai recarti con serenità nella cabina elettorale.
                 </p>
                 <q-stepper-navigation>
                   <q-btn @click="store.step++" color="primary" label="Inizia"></q-btn>
@@ -112,17 +110,16 @@
 
               <q-step
                 :name="2"
-                title="Valutazione"
+                title="Recensioni"
                 caption="(Facoltativo)"
                 icon="grade"
               >
                 <p>
-                  Questo passo ti aiuta a valutare i partiti, e calcolare un voto complessivo
-                  per ciascun partito. Lo puoi saltare: se hai le idee chiare, puoi
-                  <a href="#" @click="store.step++">assegnare subito un voto ai partiti</a>.
+                  Questo passo ti permette di recensire i partiti, e calcolare una valutazione complessiva. Lo puoi saltare: se hai le idee chiare, puoi
+                  <a href="#" @click="store.step++">subito valutare i partiti</a>.
                 </p>
                 <p>
-                  Puoi disattivare i criteri di valutazione che non si applicano o ritieni poco
+                  Puoi disattivare i criteri di recensione che non si applicano o ritieni poco
                   importanti.
                 </p>
                 <party v-for="(p, index) in store.parties"
@@ -144,11 +141,12 @@
 
               <q-step
                 :name="3"
-                title="Voti"
+                title="Valutazione"
                 icon="assessment"
               >
                 <p>
-                  Vota Random ha assegnato un voto ad ogni partito. Hai la possibilità di modificare i voti come ritieni più opportuno.
+                  Vota Random ha assegnato una valutazione ad ogni partito.
+                  Hai la possibilità di modificare le valutazioni come ritieni più opportuno.
                 </p>
                 <party v-for="(p, index) in store.parties"
                   :partyobj="p"
@@ -174,14 +172,14 @@
               >
                 <p>
                   Vota Random ha calcolato la percentuale di probabilità di votare
-                  ciascun partito, proporzionale ai voti che hai indicato. La puoi
+                  ciascun partito, proporzionale alla tua valutazione. La puoi
                   modificare se vuoi.
                 </p>
                 <p>
                   Quando sei pronto, premi il bottone <strong>Estrai</strong> per
                   scegliere casualmente il partito che voterai. Potrai fare tutte le
                   estrazioni che vuoi, per provare il sistema; quando avrai deciso di
-                  svolgere l'estrazione definitiva, attieniti al risultato!
+                  svolgere l'estrazione definitiva, attieniti al risultato per votare!
                 </p>
                 <p>
                   Se l'elezione prevede più schede (ad esempio, Camera e Senato), per

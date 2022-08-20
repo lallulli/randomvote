@@ -194,7 +194,7 @@ var app = new Vue({
     onVote: function() {
       this.$q.dialog({
         title: 'Prendi una decisione',
-        message: 'Prima di continuare prendi una decisione: questa estrazione è una prova, oppure è la tua estrazione definitiva? Nel secondo caso, attienti al risultato!',
+        message: 'Prima di continuare prendi una decisione: questa estrazione è una prova, oppure è la tua estrazione definitiva? Nel secondo caso, attienti al risultato quando voterai!',
         persistent: true
       }).onOk(() => {
         this.extract();
